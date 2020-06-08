@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+if ($argc < 2) {
+    var_dump("缺少参数");
+} else {
+    require __DIR__ . "/App/Config/define.php";
+    require __DIR__ . "/vendor/autoload.php";
+
+    \Swoole\Runtime::enableCoroutine(true);
+    $server = new \Core\Server\Server();
+    $command = $argv[1];
+    switch ($command) {
+        case  'start':
+            $server->run($argv);
+            break;
+        case 'stop':
+            $server->shutdown();
+            break;
+        case 'reload':
+            $server->reload();
+            break;
+        default:
+            var_dump('无效参数');
+            break;
+    }
+}
